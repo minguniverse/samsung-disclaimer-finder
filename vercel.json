@@ -1,12 +1,1 @@
-{
-  "buildCommand": "echo '배포 준비 완료'",
-  "public": "public",
-  "functions": {
-    "api/*.js": {
-      "runtime": "nodejs18.x"
-    }
-  },
-  "env": {
-    "ANTHROPIC_API_KEY": "@anthropic_api_key"
-  }
-}
+{}
