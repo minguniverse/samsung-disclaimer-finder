@@ -30,6 +30,8 @@
     .loading { text-align: center; padding: 20px; color: #666; }
     .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(0,0,0,.1); border-top: 2px solid #1428A0; border-radius: 50%; animation: spin 1s linear infinite; margin-right: 8px; }
     @keyframes spin { to { transform: rotate(360deg); } }
+    a.btn { display: inline-block; margin-top: 12px; padding: 8px 16px; background: #1428A0; color: white; text-decoration: none; border-radius: 4px; font-size: 14px; font-weight: 500; }
+    a.btn:hover { background: #0d1f5f; }
   </style>
 </head>
 <body>
@@ -45,80 +47,4 @@
     </div>
 
     <div id="error" class="error" style="display: none;"></div>
-    <div id="loading" class="loading" style="display: none;"><span class="spinner"></span>검색 중...</div>
-    <div id="results" class="results" style="display: none;"></div>
-    <div id="empty" class="empty" style="display: none;"><div class="empty-icon">📋</div><p>검색할 기능을 입력하고 [검색]을 클릭하세요</p></div>
-  </div>
-
-  <script>
-    const featureInput = document.getElementById('feature');
-    const searchBtn = document.getElementById('searchBtn');
-    const errorDiv = document.getElementById('error');
-    const loadingDiv = document.getElementById('loading');
-    const resultsDiv = document.getElementById('results');
-    const emptyDiv = document.getElementById('empty');
-
-    featureInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter' && !searchBtn.disabled) search();
-    });
-
-    async function search() {
-      const feature = featureInput.value.trim();
-      if (!feature) {
-        errorDiv.textContent = '검색할 기능을 입력해주세요.';
-        errorDiv.style.display = 'block';
-        return;
-      }
-
-      errorDiv.style.display = 'none';
-      resultsDiv.style.display = 'none';
-      emptyDiv.style.display = 'none';
-      loadingDiv.style.display = 'block';
-      searchBtn.disabled = true;
-
-      try {
-        const response = await fetch('/api/search', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ feature })
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) throw new Error(data.error || '검색 중 오류가 발생했습니다');
-
-        loadingDiv.style.display = 'none';
-
-        if (data.disclaimers && data.disclaimers.length > 0) {
-          renderResults(data.disclaimers);
-          resultsDiv.style.display = 'flex';
-        } else {
-          errorDiv.textContent = `"${feature}"와 관련된 디스클레이머를 찾을 수 없습니다.`;
-          errorDiv.style.display = 'block';
-        }
-      } catch (error) {
-        loadingDiv.style.display = 'none';
-        errorDiv.textContent = `검색 중 오류가 발생했습니다: ${error.message}`;
-        errorDiv.style.display = 'block';
-      } finally {
-        searchBtn.disabled = false;
-      }
-    }
-
-    function renderResults(results) {
-      resultsDiv.innerHTML = results.map(result => `
-        <div class="result-card">
-          <div class="result-header">
-            <span class="badge ${result.country === 'US' ? 'us' : ''}">${result.country}</span>
-            <span class="year-badge">${result.releaseYear}</span>
-          </div>
-          <h3 class="result-title">${result.productName}</h3>
-          <p class="result-text">${result.disclaimer}</p>
-        </div>
-      `).join('');
-    }
-
-    emptyDiv.style.display = 'block';
-  </script>
-</body>
-</html>
+    <div id="loading" class="loading" style="display:
