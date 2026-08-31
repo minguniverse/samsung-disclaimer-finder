@@ -1,0 +1,22 @@
+{
+  "name": "samsung-disclaimer-finder",
+  "version": "1.0.0",
+  "description": "UK와 US 삼성닷컴에서 디스클레이머를 검색하는 웹앱",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3"
+  },
+  "keywords": [
+    "samsung",
+    "disclaimer",
+    "search"
+  ],
+  "author": "",
+  "license": "MIT"
+}
